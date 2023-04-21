@@ -6,7 +6,8 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <nav class="h-28 px-16 flex justify-between items-center">
       <div>
-        <h1 class="text-3xl">LookBook</h1>
+        <!-- Designer un logo -->
+        <h1 class="text-3xl">Lo-okBook</h1>
       </div>
 
       <ul class="flex gap-8">
@@ -16,6 +17,28 @@ import { RouterLink, RouterView } from 'vue-router'
     </nav>
   </header>
 
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <Transition name="slide-fade" mode="out-in">
+      <component :is="Component"/>
+    </Transition>
+  </RouterView>
+  
+  
 </template>
 
+<style>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+  transition-delay: 0.3s;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+</style>
