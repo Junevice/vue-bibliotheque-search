@@ -17,36 +17,45 @@
       </div>
 
       <div class="grid grid-cols-4 gap-x-6 gap-y-8 mt-12">
-        <RouterLink v-for="book in booksStore.searchedBooks.data" class="border-black/80 border-2 px-6 py-4 rounded-md" :key="book.key.replace('/works/','')" :to="{'name':'DisplayBook', params:{id:book.key.replace('/works/','')}}">
-          <div>
-            <h4 class="font-semibold mb-1">{{ book.title }}</h4>
 
-            <!-- Auteur -->
+          <div v-for="book in booksStore.searchedBooks.data" class="border-black/80 border-2 flex flex-col justify-between px-6 py-4 rounded-md transition-shadow hover:shadow-lg" :key="book.key.replace('/works/','')">
+            
             <div>
-              <p v-if="book.author_name">{{ book.author_name[0] }}</p>
-              <p v-else class="opacity-50">Auteur anonyme</p>
+              <h4 class="font-semibold mb-1">{{ book.title }}</h4>
+
+              <!-- Auteur -->
+              <div>
+                <p v-if="book.author_name">{{ book.author_name[0] }}</p>
+                <p v-else class="opacity-50">Auteur anonyme</p>
+              </div>
+
+              <!-- Date de parution -->
+              <div>
+                <p v-if="book.first_publish_year">Publié en {{ book.first_publish_year }}</p>
+                <p v-else class="opacity-50">Date de parution non indiquée</p>
+              </div>
+
+              <!-- Nombre de pages -->
+              <div>
+                <p v-if="book.number_of_pages_median">{{ book.number_of_pages_median }} pages</p>
+                <p v-else class="opacity-50">Nombre de pages non indiqué</p>
+              </div>
+
+              <!-- Note /5 -->
+              <div>
+                <p v-if="book.ratings_average">{{ Math.round(book.ratings_average * 10)/10 }} / 5</p>
+                <p v-else class="opacity-50">Aucune note saisie</p>
+              </div>
             </div>
 
-            <!-- Date de parution -->
-            <div>
-              <p v-if="book.first_publish_year">Publié en {{ book.first_publish_year }}</p>
-              <p v-else class="opacity-50">Date de parution non indiquée</p>
+            <div class="flex justify-end"> 
+              <RouterLink :to="{'name':'DisplayBook', params:{id:book.key.replace('/works/','')}}" >
+                <button class="bg-black/40 text-white mt-4 px-4 py-2 rounded-md text-sm transition-colors hover:bg-black/80">Accéder à la fiche</button>
+              </RouterLink>
             </div>
-
-            <!-- Nombre de pages -->
-            <div>
-              <p v-if="book.number_of_pages_median">{{ book.number_of_pages_median }} pages</p>
-              <p v-else class="opacity-50">Nombre de pages non indiqué</p>
-            </div>
-
-            <!-- Note /5 -->
-            <div>
-              <p v-if="book.ratings_average">{{ Math.round(book.ratings_average * 10)/10 }} / 5</p>
-              <p v-else class="opacity-50">Aucune note saisie</p>
-            </div>
-
+           
           </div>
-        </RouterLink>
+        
       </div>
       <div class="flex justify-end px-10 mt-10">
         <button @click="fetchMoreBooks" v-if="booksStore.searchedBooks.data.length" :disabled="booksStore.searchedBooks.data.length == booksStore.searchedBooks.nbResults || loaderStore.isLoading" class="bg-black/80 text-white px-4 py-2 rounded-md disabled:opacity-50">Afficher plus de livres</button>
@@ -58,7 +67,6 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import {reactive, ref} from 'vue'
 import { createToaster } from "@meforma/vue-toaster";
 import { useLoaderStore } from '@/stores/loader';
 import {useBooksStore} from '@/stores/books'
