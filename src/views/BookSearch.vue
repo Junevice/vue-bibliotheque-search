@@ -51,6 +51,11 @@
       </div>
     </div>
     
+    <!-- Modale affichage book -->
+    <!-- <div class="absolute top-0 left-0 bg-red-500 w-screen h-screen">
+      H1
+    </div> -->
+    
   </main>
 </template>
 

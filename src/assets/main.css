@@ -1,3 +1,8 @@
+:root {
+    --primary: white;
+    --secondary: #ececec;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +11,26 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 0px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+    border-radius: 10px;
+    border: 3px solid var(--primary);
 }

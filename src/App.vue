@@ -14,6 +14,7 @@ import Loader from './components/Loader.vue'
       <ul class="flex gap-8">
         <RouterLink to="/"><li>Accueil</li></RouterLink>
         <RouterLink to="/search"><li>Rechercher un livre</li></RouterLink>
+        <RouterLink to="#"><li>Rechercher un auteur</li></RouterLink>
       </ul>
     </nav>
   </header>
