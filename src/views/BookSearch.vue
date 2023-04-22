@@ -46,7 +46,9 @@
           
         </div>
       </div>
-      <button @click="fetchMoreBooks" v-if="books.data.length" :disabled="books.data.length == books.nbResults">Fetch more</button>
+      <div class="flex justify-end px-10 mt-10">
+        <button @click="fetchMoreBooks" v-if="books.data.length" :disabled="books.data.length == books.nbResults || loaderStore.isLoading" class="bg-black/80 text-white px-4 py-2 rounded-md disabled:opacity-50">Afficher plus de livres</button>
+      </div>
     </div>
     
   </main>
@@ -106,9 +108,11 @@ const fetchBooks = async () => {
 }
 
 const fetchMoreBooks = async () => {
+  loaderStore.setIsLoading(true)
   const response = await axios.get(`https://openlibrary.org/search.json?title=${books.searchInput.replace(' ','+')}&page=${books.nextPageNumber}`)
   books.data = books.data.concat(response.data.docs)
   books.nextPageNumber = books.nextPageNumber+1
+  loaderStore.setIsLoading(false)
 }
 
 
