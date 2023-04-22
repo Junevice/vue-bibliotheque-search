@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Loader from './components/Loader.vue'
 </script>
 
 <template>
@@ -23,6 +24,7 @@ import { RouterLink, RouterView } from 'vue-router'
     </Transition>
   </RouterView>
   
+  <Loader />
   
 </template>
 
