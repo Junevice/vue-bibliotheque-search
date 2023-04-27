@@ -11,9 +11,9 @@ import Loader from './components/Loader.vue'
         <h1 class="text-3xl">Lo-okBook</h1>
       </div>
 
-      <ul class="flex gap-8">
+      <ul class="flex gap-12 text-lg">
         <RouterLink to="/"><li>Accueil</li></RouterLink>
-        <RouterLink to="/search"><li>Rechercher un livre</li></RouterLink>
+        <RouterLink to="/search-book"><li>Rechercher un livre</li></RouterLink>
         <RouterLink to="#"><li>Rechercher un auteur</li></RouterLink>
       </ul>
     </nav>
