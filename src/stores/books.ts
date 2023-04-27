@@ -19,13 +19,28 @@ export const useBooksStore = defineStore('books', () => {
     }
 
     const searchBooksInput = ref('')
+    const authorInput = ref('')
 
     const searchedBooks = reactive<booksDataType>({
-        data : [],
-        nbResults : 0,
-        nextPageNumber : 1,
-        searchInput:''
+      data : [],
+      nbResults : 0,
+      nextPageNumber : 1,
+      searchInput:''
     })
 
-  return { searchedBooks, searchBooksInput }
+    const searchedBooksByAutors = reactive<booksDataType>({
+      data : [],
+      nbResults : 0,
+      nextPageNumber : 1,
+      searchInput:''
+    })
+
+    const resetAuthorBooks = () => {
+      searchedBooksByAutors.data=[]
+      searchedBooksByAutors.nbResults=0
+      searchedBooksByAutors.nextPageNumber=1
+      searchedBooksByAutors.searchInput=''
+    }
+
+  return { searchedBooks, searchBooksInput, authorInput, searchedBooksByAutors, resetAuthorBooks }
 })

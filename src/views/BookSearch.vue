@@ -25,7 +25,7 @@
 
               <!-- Auteur -->
               <div>
-                <p v-if="book.author_name">{{ book.author_name[0] }}</p>
+                <RouterLink class="hover:underlined" :to="'/search-author?author='+book.author_name" v-if="book.author_name"><p >{{ book.author_name[0] }}</p></RouterLink>
                 <p v-else class="opacity-50">Auteur anonyme</p>
               </div>
 
@@ -74,12 +74,6 @@ import {useBooksStore} from '@/stores/books'
 const booksStore = useBooksStore()
 const loaderStore = useLoaderStore()
 const toaster = createToaster();
-
-
-
-
-
-
 
 const fetchBooks = async () => {
   loaderStore.setIsLoading(true)
