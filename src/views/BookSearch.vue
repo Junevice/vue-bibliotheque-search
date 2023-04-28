@@ -10,9 +10,9 @@
       <div class="flex items-center gap-8" v-if="booksStore.searchedBooks.nbResults">
           <div class="flex flex-col">
             <label>Filtre nombre pages minimum</label>
-            <input type="range" min="0" max="1000" step="100" v-model="nbPagesFilter" @change="filterBooks" class="color-black/80">
+            <input type="range" min="0" max="1000" step="100" v-model="booksStore.nbPagesFilterBook" @change="filterBooks" class="color-black/80">
           </div>
-          <span class="opacity-70">{{ nbPagesFilter }} pages</span>
+          <span class="opacity-70">{{ booksStore.nbPagesFilterBook }} pages</span>
         </div>
     </form>
 
@@ -22,7 +22,7 @@
           <p>Recherche en cours : <span class="italic">{{ booksStore.searchedBooks.searchInput }}</span></p>
         </div>
         <div>
-          <span>{{ booksStore.searchedBooks.filteredData.length }} / </span>{{ booksStore.searchedBooks.data.length }} / {{ booksStore.searchedBooks.nbResults }} résultats
+          <span>{{ booksStore.searchedBooks.filteredData.length }} filtrés / </span>{{ booksStore.searchedBooks.data.length }} affichés / {{ booksStore.searchedBooks.nbResults }} résultats totaux
         </div>
       </div>
 
@@ -80,13 +80,11 @@ import axios from 'axios'
 import { createToaster } from "@meforma/vue-toaster";
 import { useLoaderStore } from '@/stores/loader';
 import {useBooksStore} from '@/stores/books'
-import {ref} from 'vue'
 
 const booksStore = useBooksStore()
 const loaderStore = useLoaderStore()
 const toaster = createToaster();
 
-const nbPagesFilter = ref(0)
 
 const fetchBooks = async () => {
   loaderStore.setIsLoading(true)
@@ -106,7 +104,7 @@ const fetchBooks = async () => {
     booksStore.searchedBooks.searchInput = booksStore.searchBooksInput
     booksStore.searchedBooks.nextPageNumber = 2
 
-    nbPagesFilter.value=0
+    booksStore.nbPagesFilterBook=0
   }
   catch(e){
     if (e instanceof Error) {
@@ -126,11 +124,11 @@ const fetchMoreBooks = async () => {
 }
 
 const filterBooks = () => {
-  if(nbPagesFilter.value == 0){
+  if(booksStore.nbPagesFilterBook == 0){
     booksStore.searchedBooks.filteredData = booksStore.searchedBooks.data
   }
   else{
-    booksStore.searchedBooks.filteredData = booksStore.searchedBooks.data.filter(book=> book.number_of_pages_median && book.number_of_pages_median > nbPagesFilter.value)
+    booksStore.searchedBooks.filteredData = booksStore.searchedBooks.data.filter(book=> book.number_of_pages_median && book.number_of_pages_median > booksStore.nbPagesFilterBook)
   }
 }
 

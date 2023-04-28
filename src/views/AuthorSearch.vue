@@ -10,9 +10,9 @@
         <div class="flex items-center gap-8" v-if="booksStore.searchedBooksByAutors.nbResults">
           <div class="flex flex-col">
             <label>Filtre nombre pages minimum</label>
-            <input type="range" min="0" max="1000" step="100" v-model="nbPagesFilter" @change="filterBooks" class="color-black/80">
+            <input type="range" min="0" max="1000" step="100" v-model="booksStore.nbPagesFilterAuthor" @change="filterBooks" class="color-black/80">
           </div>
-          <span class="opacity-70">{{ nbPagesFilter }} pages</span>
+          <span class="opacity-70">{{ booksStore.nbPagesFilterAuthor }} pages</span>
         </div>
         
       </form>
@@ -23,7 +23,7 @@
             <p>Recherche en cours : <span class="italic">{{ booksStore.searchedBooksByAutors.searchInput }}</span></p>
           </div>
           <div>
-            <span>{{ booksStore.searchedBooksByAutors.filteredData.length }} / </span>{{ booksStore.searchedBooksByAutors.data.length }} / {{ booksStore.searchedBooksByAutors.nbResults }} résultats
+            <span>{{ booksStore.searchedBooksByAutors.filteredData.length }} filtrés / </span>{{ booksStore.searchedBooksByAutors.data.length }} affichés / {{ booksStore.searchedBooksByAutors.nbResults }} résultats totaux
           </div>
         </div>
   
@@ -90,7 +90,6 @@
   const toaster = createToaster()
   const route = useRoute()
 
-  const nbPagesFilter = ref(0)
   
   onMounted(()=>{
     if(route.query.author && booksStore.authorInput!=route.query.author?.toString()){
@@ -103,7 +102,7 @@
   const fetchBooks = async () => {
     loaderStore.setIsLoading(true)
     try{
-      if(booksStore.authorInput.length<5 || booksStore.authorInput.includes('  ')){
+      if(booksStore.authorInput.length<2 || booksStore.authorInput.includes('  ')){
         throw new Error("Merci de saisir au moins 5 caractères pour votre recherche (sans double espace).")
       }
       const response = await axios.get(`https://openlibrary.org/search.json?author=${booksStore.authorInput.replace(' ','+')}&page=1`)
@@ -118,7 +117,7 @@
       booksStore.searchedBooksByAutors.searchInput = booksStore.authorInput
       booksStore.searchedBooksByAutors.nextPageNumber = 2
 
-      nbPagesFilter.value=0
+      booksStore.nbPagesFilterAuthor=0
     }
     catch(e){
       if (e instanceof Error) {
@@ -138,11 +137,11 @@
   }
   
   const filterBooks = () => {
-    if(nbPagesFilter.value == 0){
+    if(booksStore.nbPagesFilterAuthor == 0){
       booksStore.searchedBooksByAutors.filteredData = booksStore.searchedBooksByAutors.data
     }
     else{
-      booksStore.searchedBooksByAutors.filteredData = booksStore.searchedBooksByAutors.data.filter(book=> book.number_of_pages_median && book.number_of_pages_median > nbPagesFilter.value)
+      booksStore.searchedBooksByAutors.filteredData = booksStore.searchedBooksByAutors.data.filter(book=> book.number_of_pages_median && book.number_of_pages_median > booksStore.nbPagesFilterAuthor)
     }
     
   }

@@ -6,10 +6,10 @@ import Loader from './components/Loader.vue'
 <template>
   <header>
     <nav class="h-28 px-16 flex justify-between items-center">
-      <div>
+      <RouterLink to="/">
         <!-- Designer un logo -->
-        <h1 class="text-3xl">Lo-okBook</h1>
-      </div>
+        <img src="/Logo.png" alt="logo" class="w-40">
+      </RouterLink>
 
       <ul class="flex gap-12 text-lg">
         <RouterLink to="/"><li>Accueil</li></RouterLink>
