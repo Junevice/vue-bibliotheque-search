@@ -14,11 +14,12 @@
 
         <div class="w-full">
           <h3 class="text-xl mb-1 font-semibold">About the book</h3>
-          <p>{{ book.description }}</p>
+          <p v-if="book.description">{{ book.description }}</p>
+          <p v-else class="italic">No description</p>
         </div>
         
       </div>  
-      <div class="w-1/2">
+      <div class="w-1/2 flex justify-center items-start">
         <img :src="`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`" />
       </div>
     </div>

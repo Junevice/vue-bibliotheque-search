@@ -1,6 +1,6 @@
 :root {
     --primary: white;
-    --secondary: #ececec;
+    --secondary: #d0d0d0;
 }
 
 @tailwind base;
@@ -20,7 +20,7 @@
 }
 
 /* Chrome, Edge, and Safari */
-    *::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width: 15px;
 }
 

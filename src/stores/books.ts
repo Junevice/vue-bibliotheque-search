@@ -13,6 +13,14 @@ export const useBooksStore = defineStore('books', () => {
           number_of_pages_median?:number,
           ratings_average?:number
         }[],
+        filteredData:{
+          key:string,
+          title:string,
+          author_name:string[],
+          first_publish_year?:number,
+          number_of_pages_median?:number,
+          ratings_average?:number
+        }[],
         nbResults:number,
         nextPageNumber:number,
         searchInput:string
@@ -23,6 +31,7 @@ export const useBooksStore = defineStore('books', () => {
 
     const searchedBooks = reactive<booksDataType>({
       data : [],
+      filteredData : [],
       nbResults : 0,
       nextPageNumber : 1,
       searchInput:''
@@ -30,6 +39,7 @@ export const useBooksStore = defineStore('books', () => {
 
     const searchedBooksByAutors = reactive<booksDataType>({
       data : [],
+      filteredData:[],
       nbResults : 0,
       nextPageNumber : 1,
       searchInput:''
